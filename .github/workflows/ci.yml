@@ -1,0 +1,34 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+       # 1. Faz o checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configura a versão do Go
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      # 3. Baixa as dependências do projeto
+      - name: Download dependencies
+        run: go mod tidy
+
+      # 4. Faz o build do projeto
+      - name: Build
+        run: go build ./...
+
+      # 5. Roda os testes (caso tenha)
+      - name: Run tests
+        run: go test ./...
