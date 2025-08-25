@@ -27,7 +27,7 @@ jobs:
 
       # 4. Faz o build do projeto
       - name: Build
-        run: go build ./...
+        run: go build ./cmd/...
 
       # 5. Roda os testes (caso tenha)
       - name: Run tests
