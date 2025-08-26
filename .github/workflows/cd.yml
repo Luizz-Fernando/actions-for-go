@@ -1,0 +1,36 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-binary:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Faz checkout do código
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configura o Go
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      # 3. Baixa as dependências
+      - name: Download dependencies
+        run: go mod tidy
+
+      # 4. Compila e gera o binário
+      - name: Build binary
+        run: go build -o build/app ./cmd
+
+      # 5. Publica o binário como artifact do GitHub Actions
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-app
+          path: build/app
