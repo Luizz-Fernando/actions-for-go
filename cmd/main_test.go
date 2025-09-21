@@ -57,7 +57,7 @@ func TestGetUserByIDNotFound(t *testing.T) {
 func TestCreateUser(t *testing.T) {
 	router := setupRouter()
 
-	body := []byte(`{"id":3,"name":"Matheus"}`)
+	body := []byte(`{"id":3,"name":"Lucas"}`)
 
 	req, _ := http.NewRequest("POST", "/users", bytes.NewBuffer(body))
 	req.Header.Set("Content-Type", "application/json")
@@ -66,5 +66,5 @@ func TestCreateUser(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 201, w.Code)
-	assert.Contains(t, w.Body.String(), "Matheus")
+	assert.Contains(t, w.Body.String(), "Lucas")
 }
